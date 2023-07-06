@@ -3,16 +3,16 @@ import "./ExpenseForm.css";
 
 function ExpenseForm(props) {
   const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmount: "",
-    enteredDate: "",
+    title: "",
+    amount: "",
+    date: "",
   });
 
   function titleChangeHandler(event) {
     setUserInput((prevState) => {
       return {
         ...prevState,
-        enteredTitle: event.target.value,
+        title: event.target.value,
       };
     });
   }
@@ -21,7 +21,7 @@ function ExpenseForm(props) {
     setUserInput((prevState) => {
       return {
         ...prevState,
-        enteredAmount: event.target.value,
+        amount: event.target.value,
       };
     });
   }
@@ -30,7 +30,7 @@ function ExpenseForm(props) {
     setUserInput((prevState) => {
       return {
         ...prevState,
-        enteredDate: event.target.value,
+        date: event.target.value,
       };
     });
   }
@@ -41,12 +41,15 @@ function ExpenseForm(props) {
     props.onSaveExpanseData(userInput);
 
     setUserInput({
-      enteredTitle: "",
-      enteredAmount: "",
-      enteredDate: "",
+      title: "",
+      amount: "",
+      date: new Date(),
     });
   }
 
+  function onClose(){
+    props.onCloseForm();
+  }
   return (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
@@ -55,7 +58,7 @@ function ExpenseForm(props) {
           <input
             type="text"
             onChange={titleChangeHandler}
-            value={userInput.enteredTitle}
+            value={userInput.title}
           />
         </div>
         <div className="new-expense__controls">
@@ -65,7 +68,7 @@ function ExpenseForm(props) {
             min="0.01"
             step="0.01"
             onChange={amountChangeHandler}
-            value={userInput.enteredAmount}
+            value={userInput.amount}
           />
         </div>
         <div className="new-expense__controls">
@@ -75,11 +78,12 @@ function ExpenseForm(props) {
             min="2019-01-01"
             max="2022-12-31"
             onChange={dateChangeHandler}
-            value={userInput.enteredDate}
+            value={userInput.date}
           />
         </div>
       </div>
       <div className="new-expense__actions">
+        <button onClick={onClose}>Close</button>
         <button type="submit">Add expense</button>
       </div>
     </form>
